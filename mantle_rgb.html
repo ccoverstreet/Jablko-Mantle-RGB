@@ -130,7 +130,7 @@
 			$MODULE_NAME.last_update = Date.now() + 100;
 
 		},
-		turn_off: function() {
+		turn_off: async function() {
 			await fetch("/jablko_modules/$MODULE_NAME/set_rgba", {
 
 				method: "POST",
