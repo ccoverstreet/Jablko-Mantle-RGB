@@ -5,10 +5,10 @@
 				.then(async function(data) {
 					const response = await data.json();
 					if (response.status == "good") {
-						document.getElementById("r").value = response.r;
-						document.getElementById("g").value = response.g;
-						document.getElementById("b").value = response.b;
-						document.getElementById("a").value = response.a;
+						document.getElementById("$MODULE_NAME_r").value = response.r;
+						document.getElementById("$MODULE_NAME_g").value = response.g;
+						document.getElementById("$MODULE_NAME_b").value = response.b;
+						document.getElementById("$MODULE_NAME_a").value = response.a;
 
 						document.getElementById("$MODULE_NAME_preview").style.backgroundColor = `rgb(${parseInt(response.r / 255 * a)}, ${parseInt(response.g / 255 * a)}, ${parseInt(response.b / 255 * a)})`;
 						const rgb_status = document.getElementById("$MODULE_NAME_status");
@@ -27,9 +27,9 @@
 		},
 		set_rgba: async function() {
 			var values0 = []
-			values0.push(parseInt(document.getElementById("r").value));
-			values0.push(parseInt(document.getElementById("g").value));
-			values0.push(parseInt(document.getElementById("b").value));
+			values0.push(parseInt(document.getElementById("$MODULE_NAME_r").value));
+			values0.push(parseInt(document.getElementById("$MODULE_NAME_g").value));
+			values0.push(parseInt(document.getElementById("$MODULE_NAME_b").value));
 			const hsl0 = $MODULE_NAME.rgb2hsl(values0[0], values0[1], values0[2]);
 
 			document.getElementById("$MODULE_NAME_preview").style.backgroundColor = `hsl(${Math.floor(hsl0[0])}, ${100}%, ${50}%)`;
@@ -41,10 +41,10 @@
 			setTimeout(async function() {
 				$MODULE_NAME.last_update = Date.now();
 
-				const r = document.getElementById("r").value;
-				const g = document.getElementById("g").value;
-				const b = document.getElementById("b").value;
-				const a = document.getElementById("a").value;
+				const r = document.getElementById("$MODULE_NAME_r").value;
+				const g = document.getElementById("$MODULE_NAME_g").value;
+				const b = document.getElementById("$MODULE_NAME_b").value;
+				const a = document.getElementById("$MODULE_NAME_a").value;
 
 				const raw_response = await fetch("/jablko_modules/$MODULE_NAME/set_rgba", {
 
@@ -90,9 +90,9 @@
 			setTimeout(async function() {
 				$MODULE_NAME.last_update = Date.now();
 
-				const H = document.getElementById("h").value;
-				const S = document.getElementById("s").value;
-				const L = document.getElementById("l").value;
+				const H = document.getElementById("$MODULE_NAME_h").value;
+				const S = document.getElementById("$MODULE_NAME_s").value;
+				const L = document.getElementById("$MODULE_NAME_l").value;
 
 				const rgb = $MODULE_NAME.hsl2rgb(H, S / 100, L / 100);
 				console.log(rgb);
@@ -180,10 +180,10 @@
 	}
 
 	document.addEventListener("DOMContentLoaded", function(event) {
-		const r_slider = document.getElementById("r");
-		const g_slider = document.getElementById("g");
-		const b_slider = document.getElementById("b");
-		const a_slider = document.getElementById("a");
+		const r_slider = document.getElementById("$MODULE_NAME_r");
+		const g_slider = document.getElementById("$MODULE_NAME_g");
+		const b_slider = document.getElementById("$MODULE_NAME_b");
+		const a_slider = document.getElementById("$MODULE_NAME_a");
 		r_slider.oninput = function() {
 			$MODULE_NAME.set_rgba();
 		};
@@ -206,9 +206,9 @@
 			$MODULE_NAME.status();
 		});
 
-		const h_slider = document.getElementById("h");
-		const s_slider = document.getElementById("s");
-		const l_slider = document.getElementById("l");
+		const h_slider = document.getElementById("$MODULE_NAME_h");
+		const s_slider = document.getElementById("$MODULE_NAME_s");
+		const l_slider = document.getElementById("$MODULE_NAME_l");
 
 		h_slider.oninput = function() {
 			$MODULE_NAME.set_hsl();
@@ -308,10 +308,10 @@
 			<div>Alpha</div>
 		</div>
 		<div style="display: flex; justify-content: center;">
-			<input id="r" type="range" min="0" max="255"></input>
-			<input id="g" type="range" min="0" max="255"></input>
-			<input id="b" type="range" min="0" max="255"></input>
-			<input id="a" type="range" min="0" max="1" step="0.01"></input>
+			<input id="$MODULE_NAME_r" type="range" min="0" max="255"></input>
+			<input id="$MODULE_NAME_g" type="range" min="0" max="255"></input>
+			<input id="$MODULE_NAME_b" type="range" min="0" max="255"></input>
+			<input id="$MODULE_NAME_a" type="range" min="0" max="1" step="0.01"></input>
 		</div>
 	</div>
 
@@ -322,9 +322,9 @@
 			<div>Lightness</div>
 		</div>
 		<div style="display: flex; justify-content: center;">
-			<input id="h" type="range" min="0" max="360"></input>
-			<input id="s" type="range" min="0" max="100"></input>
-			<input id="l" type="range" min="0" max="100"></input>
+			<input id="$MODULE_NAME_h" type="range" min="0" max="360"></input>
+			<input id="$MODULE_NAME_s" type="range" min="0" max="100"></input>
+			<input id="$MODULE_NAME_l" type="range" min="0" max="100"></input>
 		</div>
 	</div>
 
