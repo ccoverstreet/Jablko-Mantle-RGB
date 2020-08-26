@@ -10,7 +10,7 @@
 						document.getElementById("$MODULE_NAME_b").value = response.b;
 						document.getElementById("$MODULE_NAME_a").value = response.a;
 
-						document.getElementById("$MODULE_NAME_preview").style.backgroundColor = `rgb(${parseInt(response.r / 255 * response.a)}, ${parseInt(response.g / 255 * response.a)}, ${parseInt(response.b / 255 * response.a)})`;
+						document.getElementById("$MODULE_NAME_preview").style.backgroundColor = `rgb(${parseInt(response.r / 255)}, ${parseInt(response.g / 255)}, ${parseInt(response.b / 255)})`;
 						const rgb_status = document.getElementById("$MODULE_NAME_status");
 						rgb_status.style.backgroundColor = "var(--color-green)";
 						rgb_status.textContent = "Online";
