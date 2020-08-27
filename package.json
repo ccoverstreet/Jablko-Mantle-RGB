@@ -15,5 +15,8 @@
   "bugs": {
     "url": "https://github.com/ccoverstreet/Jablko-Mantle-RGB/issues"
   },
-  "homepage": "https://github.com/ccoverstreet/Jablko-Mantle-RGB#readme"
+  "homepage": "https://github.com/ccoverstreet/Jablko-Mantle-RGB#readme",
+  "dependencies": {
+    "leftpad": "0.0.1"
+  }
 }
