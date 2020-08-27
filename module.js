@@ -8,9 +8,8 @@ const fs = require("fs").promises;
 const path = require("path");
 const fetch = require("node-fetch");
 
-
 const module_name = path.basename(__dirname);
-const module_config = require("../../jablko_interface.js").jablko_config.jablko_modules[module_name];
+const module_config = require(module.parent.filename).jablko_config.jablko_modules[module_name];
 
 // Check if module_config is correct
 if (module_config.controller_ip == undefined) {
