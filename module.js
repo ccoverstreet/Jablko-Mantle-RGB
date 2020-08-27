@@ -13,7 +13,7 @@ const module_config = require(module.parent.filename).jablko_config.jablko_modul
 
 // Check if module_config is correct
 if (module_config.controller_ip == null || module_config.controller_ip == undefined) {
-	throw new Error("Incorrect configuration for Mantle RGB Light");
+	throw new Error("Incorrect Configuration");
 }
 
 module.exports.permission_level = 0;
