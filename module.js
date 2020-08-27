@@ -12,7 +12,7 @@ const module_name = path.basename(__dirname);
 const module_config = require(module.parent.filename).jablko_config.jablko_modules[module_name];
 
 // Check if module_config is correct
-if (module_config.controller_ip == undefined) {
+if (module_config.controller_ip == null || module_config.controller_ip == undefined) {
 	throw new Error("Incorrect configuration for Mantle RGB Light");
 }
 
