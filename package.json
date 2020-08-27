@@ -18,5 +18,8 @@
   "homepage": "https://github.com/ccoverstreet/Jablko-Mantle-RGB#readme",
   "dependencies": {
     "node-fetch": "^2.6.0"
+  },
+  "jablko": {
+	"controller_ip": null
   }
 }
