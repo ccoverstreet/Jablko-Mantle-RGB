@@ -53,34 +53,7 @@
 				const b = document.getElementById("$MODULE_NAME_b").value;
 				const a = document.getElementById("$MODULE_NAME_a").value;
 
-				const raw_response = await fetch("/jablko_modules/$MODULE_NAME/set_rgba", {
-
-					method: "POST",
-					headers: {
-						"Accept": "application/json",
-						"Content-Type": "application/json"
-					},
-					body: JSON.stringify({r, g, b, a})
-				})
-					.then(async function(data) {
-						const json_response = await data.json();
-						if (json_response.status == "good") {
-							const rgb_status = document.getElementById("$MODULE_NAME_status");
-							rgb_status.style.backgroundColor = "var(--color-green)";
-							rgb_status.textContent = "Online";
-						} else {
-							throw new Error("Unable to set RGBA");
-						}
-					})
-					.catch(error => {
-						console.log(error);
-						const rgb_status = document.getElementById("$MODULE_NAME_status");
-						rgb_status.style.backgroundColor = "var(--color-red)";
-						rgb_status.textContent = "Offline";
-						return;
-					});
-
-
+				await $MODULE_NAME.set_color(r, g, b, a);
 			}, 100);
 
 			$MODULE_NAME.last_update = Date.now() + 100;
@@ -103,40 +76,39 @@
 				const A = document.getElementById("$MODULE_NAME_a1").value;
 
 				const rgb = $MODULE_NAME.hsl2rgb(H, S / 100, L / 100);
-				console.log(rgb);
 
-				const raw_response = await fetch("/jablko_modules/$MODULE_NAME/set_rgba", {
+				await $MODULE_NAME.set_color(rgb[0], rgb[1], rgb[2], A);
+			}, 100);
 
+			$MODULE_NAME.last_update = Date.now() + 100;
+
+		},
+		set_color: async (r, g, b, a) => {
+			const raw_response = await fetch("/jablko_modules/$MODULE_NAME/set_rgb", {
 					method: "POST",
 					headers: {
 						"Accept": "application/json",
 						"Content-Type": "application/json"
 					},
-					body: JSON.stringify({r: rgb[0], g: rgb[1], b: rgb[2], a: A})
-				})
-					.then(async function(data) {
-						const json_response = await data.json();
-						if (json_response.status == "good") {
-							const rgb_status = document.getElementById("$MODULE_NAME_status");
-							rgb_status.style.backgroundColor = "var(--color-green)";
-							rgb_status.textContent = "Online";
-						} else {
-							throw new Error("Unable to set RGBA");
-						}
-					})
-					.catch(error => {
-						console.log(error);
+					body: JSON.stringify({r: r, g: g, b: b, a: a})
+			})
+				.then(async (data) => {
+					const json_response = await data.json();
+					if (json_response.status == "good") {
 						const rgb_status = document.getElementById("$MODULE_NAME_status");
-						rgb_status.style.backgroundColor = "var(--color-red)";
-						rgb_status.textContent = "Offline";
-						return;
-					});
-
-
-			}, 100);
-
-			$MODULE_NAME.last_update = Date.now() + 100;
-
+						rgb_status.style.backgroundColor = "var(--color-green)";
+						rgb_status.textContent = "Online";
+					} else {
+						throw new Error("Unable to set RGBA");
+					}
+				})
+				.catch((error) => {
+					console.log(error);
+					const rgb_status = document.getElementById("$MODULE_NAME_status");
+					rgb_status.style.backgroundColor = "var(--color-red)";
+					rgb_status.textContent = "Offline";
+					return;
+				});
 		},
 		turn_off: async function() {
 			await fetch("/jablko_modules/$MODULE_NAME/set_rgba", {
