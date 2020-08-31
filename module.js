@@ -65,3 +65,15 @@ module.exports.set_rgba = async (req, res) => {
 			return;
 		});
 }
+
+module.exports.chatbot = {
+	turn_off_lights: {
+		activation_phrases: [
+			"turn off mantle",
+			"turn off the lights"
+		],
+		function: async function() {
+			return "Hi from Mantle RGB";
+		}
+	}		
+}
