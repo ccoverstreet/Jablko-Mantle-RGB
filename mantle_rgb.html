@@ -84,7 +84,7 @@
 
 		},
 		set_color: async (r, g, b, a) => {
-			const raw_response = await fetch("/jablko_modules/$MODULE_NAME/set_rgb", {
+			const raw_response = await fetch("/jablko_modules/$MODULE_NAME/set_rgba", {
 					method: "POST",
 					headers: {
 						"Accept": "application/json",
@@ -281,7 +281,7 @@
 		<div id="$MODULE_NAME_preview"></div>
 		<select id="$MODULE_NAME_mode" style="margin-left: auto; margin-right: 15px;">
 			<option value="rgba">RGBA</option>
-			<option value="hsl">HSL</option>
+			<option value="hsl">HSLA</option>
 		</select>
 	</div>
 
