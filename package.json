@@ -32,7 +32,7 @@
 			},
 			"cycle": {
 				"activation_phrase": "mantle cycle",
-				"function": "chatbot_color_cycle"
+				"function": "chatbot_cycle_color"
 			}
 		}
 	}
