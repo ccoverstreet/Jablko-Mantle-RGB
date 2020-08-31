@@ -1,25 +1,39 @@
 {
-  "name": "jablko_mantle_rgb",
-  "version": "1.1.0",
-  "description": "",
-  "main": "module.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/ccoverstreet/Jablko-Mantle-RGB.git"
-  },
-  "author": "",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/ccoverstreet/Jablko-Mantle-RGB/issues"
-  },
-  "homepage": "https://github.com/ccoverstreet/Jablko-Mantle-RGB#readme",
-  "dependencies": {
-    "node-fetch": "^2.6.0"
-  },
-  "jablko": {
-	"controller_ip": null
-  }
+	"name": "jablko_mantle_rgb",
+	"version": "1.1.0",
+	"description": "",
+	"main": "module.js",
+	"scripts": {
+		"test": "echo \"Error: no test specified\" && exit 1"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/ccoverstreet/Jablko-Mantle-RGB.git"
+	},
+	"author": "",
+	"license": "ISC",
+	"bugs": {
+		"url": "https://github.com/ccoverstreet/Jablko-Mantle-RGB/issues"
+	},
+	"homepage": "https://github.com/ccoverstreet/Jablko-Mantle-RGB#readme",
+	"dependencies": {
+		"node-fetch": "^2.6.0"
+	},
+	"jablko": {
+		"controller_ip": null,
+		"chatbot": {
+			"turn_off": {
+				"activation_phrase": "turn off mantle light",
+				"function": "chatbot_turn_off"
+			},
+			"random": {
+				"activation_phrase": "mantle random",
+				"function": "chatbot_random_color"
+			},
+			"cycle": {
+				"activation_phrase": "mantle cycle",
+				"function": "chatbot_color_cycle"
+			}
+		}
+	}
 }

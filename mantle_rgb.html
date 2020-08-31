@@ -10,7 +10,14 @@
 						document.getElementById("$MODULE_NAME_b").value = response.b;
 						document.getElementById("$MODULE_NAME_a").value = response.a;
 
-						document.getElementById("$MODULE_NAME_preview").style.backgroundColor = `rgb(${parseInt(response.r)}, ${parseInt(response.g)}, ${parseInt(response.b)})`;
+						const rgb_converted = $MODULE_NAME.rgb2hsl(response.r, response.g, response.b);
+
+						document.getElementById("$MODULE_NAME_h").value = rgb_converted[0];
+						document.getElementById("$MODULE_NAME_s").value = rgb_converted[1] * 100;
+						document.getElementById("$MODULE_NAME_l").value = rgb_converted[2] * 100;
+						document.getElementById("$MODULE_NAME_a1").value = response.a;
+
+						document.getElementById("$MODULE_NAME_preview").style.backgroundColor = `hsl(${Math.floor(rgb_converted[0])}, 100%, 50%`;
 						const rgb_status = document.getElementById("$MODULE_NAME_status");
 						rgb_status.style.backgroundColor = "var(--color-green)";
 						rgb_status.textContent = "Online";
@@ -46,34 +53,7 @@
 				const b = document.getElementById("$MODULE_NAME_b").value;
 				const a = document.getElementById("$MODULE_NAME_a").value;
 
-				const raw_response = await fetch("/jablko_modules/$MODULE_NAME/set_rgba", {
-
-					method: "POST",
-					headers: {
-						"Accept": "application/json",
-						"Content-Type": "application/json"
-					},
-					body: JSON.stringify({r, g, b, a})
-				})
-					.then(async function(data) {
-						const json_response = await data.json();
-						if (json_response.status == "good") {
-							const rgb_status = document.getElementById("$MODULE_NAME_status");
-							rgb_status.style.backgroundColor = "var(--color-green)";
-							rgb_status.textContent = "Online";
-						} else {
-							throw new Error("Unable to set RGBA");
-						}
-					})
-					.catch(error => {
-						console.log(error);
-						const rgb_status = document.getElementById("$MODULE_NAME_status");
-						rgb_status.style.backgroundColor = "var(--color-red)";
-						rgb_status.textContent = "Offline";
-						return;
-					});
-
-
+				await $MODULE_NAME.set_color(r, g, b, a);
 			}, 100);
 
 			$MODULE_NAME.last_update = Date.now() + 100;
@@ -93,42 +73,42 @@
 				const H = document.getElementById("$MODULE_NAME_h").value;
 				const S = document.getElementById("$MODULE_NAME_s").value;
 				const L = document.getElementById("$MODULE_NAME_l").value;
+				const A = document.getElementById("$MODULE_NAME_a1").value;
 
 				const rgb = $MODULE_NAME.hsl2rgb(H, S / 100, L / 100);
-				console.log(rgb);
 
-				const raw_response = await fetch("/jablko_modules/$MODULE_NAME/set_rgba", {
+				await $MODULE_NAME.set_color(rgb[0], rgb[1], rgb[2], A);
+			}, 100);
 
+			$MODULE_NAME.last_update = Date.now() + 100;
+
+		},
+		set_color: async (r, g, b, a) => {
+			const raw_response = await fetch("/jablko_modules/$MODULE_NAME/set_rgba", {
 					method: "POST",
 					headers: {
 						"Accept": "application/json",
 						"Content-Type": "application/json"
 					},
-					body: JSON.stringify({r: rgb[0], g: rgb[1], b: rgb[2], a: L / 100})
-				})
-					.then(async function(data) {
-						const json_response = await data.json();
-						if (json_response.status == "good") {
-							const rgb_status = document.getElementById("$MODULE_NAME_status");
-							rgb_status.style.backgroundColor = "var(--color-green)";
-							rgb_status.textContent = "Online";
-						} else {
-							throw new Error("Unable to set RGBA");
-						}
-					})
-					.catch(error => {
-						console.log(error);
+					body: JSON.stringify({r: r, g: g, b: b, a: a})
+			})
+				.then(async (data) => {
+					const json_response = await data.json();
+					if (json_response.status == "good") {
 						const rgb_status = document.getElementById("$MODULE_NAME_status");
-						rgb_status.style.backgroundColor = "var(--color-red)";
-						rgb_status.textContent = "Offline";
-						return;
-					});
-
-
-			}, 100);
-
-			$MODULE_NAME.last_update = Date.now() + 100;
-
+						rgb_status.style.backgroundColor = "var(--color-green)";
+						rgb_status.textContent = "Online";
+					} else {
+						throw new Error("Unable to set RGBA");
+					}
+				})
+				.catch((error) => {
+					console.log(error);
+					const rgb_status = document.getElementById("$MODULE_NAME_status");
+					rgb_status.style.backgroundColor = "var(--color-red)";
+					rgb_status.textContent = "Offline";
+					return;
+				});
 		},
 		turn_off: async function() {
 			await fetch("/jablko_modules/$MODULE_NAME/set_rgba", {
@@ -209,6 +189,7 @@
 		const h_slider = document.getElementById("$MODULE_NAME_h");
 		const s_slider = document.getElementById("$MODULE_NAME_s");
 		const l_slider = document.getElementById("$MODULE_NAME_l");
+		const a1_slider = document.getElementById("$MODULE_NAME_a1");
 
 		h_slider.oninput = function() {
 			$MODULE_NAME.set_hsl();
@@ -222,14 +203,20 @@
 			$MODULE_NAME.set_hsl();
 		}
 
+		a1_slider.oninput = function() {
+			$MODULE_NAME.set_hsl();
+		}
+
 		document.getElementById("$MODULE_NAME_mode").addEventListener("change", function(event) {
 			const value = event.target.value;
 			if (value == "rgba") {
 				document.getElementById("$MODULE_NAME_rgba").style.display = "block";
 				document.getElementById("$MODULE_NAME_hsl").style.display = "none";
+				$MODULE_NAME.status()
 			} else if (value == "hsl") {
 				document.getElementById("$MODULE_NAME_rgba").style.display = "none";
 				document.getElementById("$MODULE_NAME_hsl").style.display = "block";
+				$MODULE_NAME.status()
 			}
 			console.log(event.target.value);
 		});
@@ -259,8 +246,7 @@
 
 #$MODULE_NAME_hsl > div > input {
 	-webkit-appearance: slider-vertical;
-	width: 30%;
-	height: 40vh;
+	width: 20%;
 }
 #$MODULE_NAME_hsl > div > div {
 	display: flex;
@@ -295,7 +281,7 @@
 		<div id="$MODULE_NAME_preview"></div>
 		<select id="$MODULE_NAME_mode" style="margin-left: auto; margin-right: 15px;">
 			<option value="rgba">RGBA</option>
-			<option value="hsl">HSL</option>
+			<option value="hsl">HSLA</option>
 		</select>
 	</div>
 
@@ -319,11 +305,13 @@
 			<div>Hue</div>
 			<div>Saturation</div>
 			<div>Lightness</div>
+			<div>Alpha</div>
 		</div>
 		<div style="display: flex; justify-content: center;">
 			<input id="$MODULE_NAME_h" type="range" min="0" max="360"></input>
 			<input id="$MODULE_NAME_s" type="range" min="0" max="100"></input>
 			<input id="$MODULE_NAME_l" type="range" min="0" max="100"></input>
+			<input id="$MODULE_NAME_a1" type="range" min="0" max="1" step="0.01"></input>
 		</div>
 	</div>
 
