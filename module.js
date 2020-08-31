@@ -151,6 +151,7 @@ module.exports.chatbot_cycle_color = async () => {
 	
 	await set_color({r: 50, g: 255, b: 130, a: 0.4});
 
+	interval_color_cycle = null;
 	interval_color_cycle = setInterval(async function() {
 		const damping = 0.0003;
 
