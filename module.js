@@ -125,7 +125,7 @@ module.exports.chatbot_random_color = async () => {
 	const responses = [
 		"You asked for it.",
 		"Pick a number, any number.",
-		"Here's a good one"
+		"Here's a good one!"
 	];
 
 	res = responses[random_int(responses.length)];
