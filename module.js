@@ -98,38 +98,48 @@ function random_int(max) {
 }
 
 module.exports.chatbot_turn_off = async () => {
+	var res = undefined;
+
 	const responses = [
 		"I've turned of the lights.",
 		"Ok, saving the environment.",
 		"LED Lights off."
 	]
 
+	res = responses[random_int(responses.length)];
+
 	clearInterval(interval_color_cycle);
 
 	await set_color({r: 255, g: 255, b: 255, a: 0})
 		.catch((error) => {
-			return "Sorry, I wasn't able to turn off the LEDs";
+			console.debug(error);
+			res = "Sorry, I wasn't able to turn off the LEDs";
 		});
 
-	return responses[random_int(responses.length)];
+	return res;
 }
 
 module.exports.chatbot_random_color = async () => {
+	var res = undefined;
+
 	const responses = [
 		"You asked for it.",
 		"Pick a number, any number.",
 		"Here's a good one"
 	];
 
+	res = responses[random_int(responses.length)];
+
 	clearInterval(interval_color_cycle);
 
 	await set_color({r: random_int(255), g: random_int(255), b: random_int(255), a: 0.4})
 		.catch((error) => {
-			return "Sorry, I wasn't able to change the colors";
+			console.debug(error);
+			res = "Sorry, I wasn't able to change the colors";
 		});
 
 
-	return responses[random_int(responses.length)];
+	return res;
 }
 
 function sleep(ms) {
