@@ -2,9 +2,6 @@
 #include <ArduinoJson.h>
 #include "config.h"
 
-const char *ssid = WIFI_SSID;
-const char *password = WIFI_PASSWORD;
-
 unsigned int r = 255;
 unsigned int g = 255;
 unsigned int b = 255;
@@ -46,7 +43,7 @@ void setup() {
 
 void init_wifi() {
   // Initializes WiFi on ESP8266. Must check for failure.
-  WiFi.begin(ssid, password);
+  WiFi.begin(WIFI_SSID, WIFI_PASSWORD);
   Serial.print("Connecting to WiFi...\n");
 
   while (WiFi.status() != WL_CONNECTED) {
@@ -58,32 +55,8 @@ void init_wifi() {
   Serial.println(WiFi.localIP());
 }
 
-unsigned ascending = 1;
 void loop() {
   server.handleClient();
-
-/*
-  if (ascending) {
-    for (int i = 0; i < 1024; i++) {
-      analogWrite(RED_PIN, i);
-      analogWrite(BLUE_PIN, i);
-      analogWrite(GREEN_PIN, i);
-      
-      delay(1);
-    }
-    ascending = 0;
-  } else {
-    for (int i = 1023; i >= 0; i--) {
-      analogWrite(RED_PIN, i);
-      analogWrite(BLUE_PIN, i);
-      analogWrite(GREEN_PIN, i);
-      
-      delay(1);
-    }
-    ascending = 1;
-  }
-
- */
   delay(1);
 }
 
