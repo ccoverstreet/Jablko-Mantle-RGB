@@ -20,6 +20,7 @@
 		"node-fetch": "^2.6.0"
 	},
 	"jablko": {
+		"label": "RGB Light",
 		"controller_ip": null,
 		"chatbot": {
 			"turn_off": {

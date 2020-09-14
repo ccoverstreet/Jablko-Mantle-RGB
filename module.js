@@ -26,7 +26,9 @@ var current_color = {
 module.exports.permission_level = 0;
 
 module.exports.generate_card = async () => {
-	return (await fs.readFile(`${__dirname}/mantle_rgb.html`, "utf8")).replace(/\$MODULE_NAME/g, module_name);
+	return (await fs.readFile(`${__dirname}/mantle_rgb.html`, "utf8"))
+		.replace(/\$MODULE_NAME/g, module_name)
+		.replace(/\$MODULE_LABEL/g, module_config.label);
 }
 
 module.exports.status = async (req, res) => {
