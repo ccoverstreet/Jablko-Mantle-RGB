@@ -105,8 +105,10 @@ module.exports.chatbot_turn_off = async () => {
 	const responses = [
 		"I've turned of the lights.",
 		"Ok, saving the environment.",
-		"LED Lights off."
-	]
+		"LED Lights off.",
+		"Into the darkness.",
+		"Lights out!"
+	];
 
 	res = responses[random_int(responses.length)];
 
@@ -151,6 +153,8 @@ function sleep(ms) {
 var interval_color_cycle = null;
 
 module.exports.chatbot_cycle_color = async () => {
+	interval_color_cycle = null;
+
 	responses = [
 		"I've started the color cycling.",
 		"Taste the rainbow!",
@@ -160,10 +164,7 @@ module.exports.chatbot_cycle_color = async () => {
 	if (interval_color_cycle != null) {
 		return responses[random_int(responses.length)];
 	} 
-	
-	await set_color({r: 50, g: 255, b: 130, a: 0.4});
 
-	interval_color_cycle = null;
 	interval_color_cycle = setInterval(async function() {
 		const damping = 0.0003;
 
